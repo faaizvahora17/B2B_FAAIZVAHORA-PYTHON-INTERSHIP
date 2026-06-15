@@ -35,31 +35,37 @@ def analyze_folder(folder_path):
 
     total_folder_size = get_folder_size(folder_path)
 
-    print("=" * 60)
-    print(f"Total Folder Size: {format_size(total_folder_size)}")
-    print("=" * 60)
+    print("-" * 150)
+    print(f"\t\t\t\t\t\t\tTotal Folder Size: {format_size(total_folder_size)}")
+    print("-" * 150)
 
-    print("\nSubfolder Sizes:\n")
+    print("\nFILE\FOLDER\t\tFILE NAME\t\t\t\t\t\tSIZE:\n")
+    print("-" * 150)
 
     try:
        for item in os.listdir(folder_path):
-         item_path = os.path.join(folder_path, item)
-         if os.path.isdir(item_path):
+
+        item_path = os.path.join(folder_path, item)
+
+        if os.path.isdir(item_path):
             size = get_folder_size(item_path)
-            print(f"[DIR ] {item:<40} {format_size(size)}")
+            print(f"<FOLDER>\t{item:<62} {format_size(size)}")
 
-         elif os.path.isfile(item_path):
+        elif os.path.isfile(item_path):
             size = os.path.getsize(item_path)
-            print(f"[FILE] {item:<40} {format_size(size)}")
-
+            print(f"<FILE>\t\t{item:<62} {format_size(size)}")
+   
     except PermissionError:
-          print("Permission denied.")
+        print("Permission denied.")
 
 
-    if __name__ == "__main__":
-         folder = input("Enter folder path: ").strip()
+if __name__ == "__main__":
+    folder = input("Enter folder path: ").strip()
 
     if os.path.exists(folder):
         analyze_folder(folder)
     else:
         print("Folder does not exist.")
+    print("-" * 150)
+    print("\t\t\t\t\t\t\t THANK YOU")
+    print("-" * 150)
