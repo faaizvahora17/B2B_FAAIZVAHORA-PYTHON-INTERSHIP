@@ -69,18 +69,18 @@ if __name__ == "__main__":
     print("-" * 150)
     print("\t\t\t\t\t\t\t THANK YOU")
     print("-" * 150)
-
-    print("*" * 150)
+#------------------------------------------------------------------------------------------------------------------------------------------------------
+#******************************************************************************************************************************************************
     #EXPACTED OUTPUT:-
 
-    #c:\Users\sahil\python_intership\project_folder\folder_size_analyzer.py:42: SyntaxWarning: "\F" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\F"? A raw string is also an option.
-  #print("\nFILE\FOLDER\t\tFILE NAME\t\t\t\t\t\tSIZE:\n")
+#c:\Users\sahil\python_intership\project_folder\folder_size_analyzer.py:42: SyntaxWarning: "\F" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\F"? A raw string is also an option.
+#print("\nFILE\FOLDER\t\tFILE NAME\t\t\t\t\t\tSIZE:\n")
 #Enter folder path: C:\samsung data
 
 #Analyzing: C:\samsung data
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
- #                                                       Total Folder Size: 3.09 GB
+#                                                       Total Folder Size: 3.09 GB
 #------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #FILE\FOLDER             FILE NAME                                               SIZE:
