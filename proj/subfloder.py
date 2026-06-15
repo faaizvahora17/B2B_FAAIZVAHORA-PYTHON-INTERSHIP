@@ -41,23 +41,23 @@ def analyze_folder(folder_path):
 
     print("\nSubfolder Sizes:\n")
 
-try:
-    for item in os.listdir(folder_path):
-        item_path = os.path.join(folder_path, item)
-        if os.path.isdir(item_path):
+    try:
+       for item in os.listdir(folder_path):
+         item_path = os.path.join(folder_path, item)
+         if os.path.isdir(item_path):
             size = get_folder_size(item_path)
             print(f"[DIR ] {item:<40} {format_size(size)}")
 
-        elif os.path.isfile(item_path):
+         elif os.path.isfile(item_path):
             size = os.path.getsize(item_path)
             print(f"[FILE] {item:<40} {format_size(size)}")
 
-except PermissionError:
-        print("Permission denied.")
+    except PermissionError:
+          print("Permission denied.")
 
 
-if __name__ == "__main__":
-    folder = input("Enter folder path: ").strip()
+    if __name__ == "__main__":
+         folder = input("Enter folder path: ").strip()
 
     if os.path.exists(folder):
         analyze_folder(folder)
