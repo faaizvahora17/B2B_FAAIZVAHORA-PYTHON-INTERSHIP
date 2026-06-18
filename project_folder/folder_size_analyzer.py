@@ -73,7 +73,7 @@ if __name__ == "__main__":
 #******************************************************************************************************************************************************
     #EXPACTED OUTPUT:-
 
-#c:\Users\sahil\python_intership\project_folder\folder_size_analyzer.py:42: SyntaxWarning: "\F" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\F"? A raw string is also an option.
+#c:\Users\asus\python_intership\project_folder\folder_size_analyzer.py:42: SyntaxWarning: "\F" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\F"? A raw string is also an option.
 #print("\nFILE\FOLDER\t\tFILE NAME\t\t\t\t\t\tSIZE:\n")
 #Enter folder path: C:\samsung data
 
