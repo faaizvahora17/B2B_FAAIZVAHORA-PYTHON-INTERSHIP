@@ -65,7 +65,7 @@ if __name__ == "__main__":
     if os.path.exists(folder):
         analyze_folder(folder)
     else:
-        print("Folder does not exist.")
+        print("\t\t\t*******FOLDER DOES NOT EXIST*******")
     print("-" * 150)
     print("\t\t\t\t\t\t\t THANK YOU")
     print("-" * 150)
