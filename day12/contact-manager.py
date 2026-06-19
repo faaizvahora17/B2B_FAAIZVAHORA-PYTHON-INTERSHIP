@@ -1,7 +1,3 @@
-# Day 12 Mini Project: Contact Manager
-# Run this file using the command: python contact_manager.py
-
-# Global list to store all contact dictionaries
 contacts = []
 
 def add_contact():
