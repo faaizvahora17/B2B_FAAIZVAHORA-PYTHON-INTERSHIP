@@ -1,8 +1,10 @@
 import os
+import tkinter as tk
+from tkinter import filedialog, messagebox
 import matplotlib.pyplot as plt
 
+
 def format_size(size_bytes):
-    """Convert bytes to a human-readable format."""
     units = ['B', 'KB', 'MB', 'GB', 'TB']
     size = float(size_bytes)
 
@@ -15,105 +17,129 @@ def format_size(size_bytes):
 
 
 def get_folder_size(folder_path):
-    """Recursively calculate folder size."""
     total_size = 0
 
     for root, dirs, files in os.walk(folder_path):
         for file in files:
-            file_path = os.path.join(root, file)
-
             try:
-                total_size += os.path.getsize(file_path)
-            except (PermissionError, FileNotFoundError):
-                continue
+                total_size += os.path.getsize(os.path.join(root, file))
+            except:
+                pass
 
     return total_size
 
 
-def analyze_folder(folder_path):
-    print(f"\nAnalyzing: {folder_path}\n")
+def analyze_folder():
 
-    total_folder_size = get_folder_size(folder_path)
+    folder_path = filedialog.askdirectory()
 
-    print("-" * 150)
-    print(f"\t\t\t\t\t\t\tTotal Folder Size: {format_size(total_folder_size)}")
-    print("-" * 150)
+    if not folder_path:
+        return
 
-    print("\nFILE\FOLDER\t\tFILE NAME\t\t\t\t\t\tSIZE:\n")
-    print("-" * 150)
+    text_box.delete(1.0, tk.END)
 
-    try:
-       for item in os.listdir(folder_path):
+    total = get_folder_size(folder_path)
 
-        item_path = os.path.join(folder_path, item)
+    text_box.insert(tk.END,
+                    f"\t\t\t\t\t\t\t\t\t\tFolder:-\t{folder_path}\n\n")
+    text_box.insert(tk.END,
+                    f"\t\t\t\t\t\t\t\t\t\tTotal Folder Size:- {format_size(total)}\n")
+
+    text_box.insert(tk.END,"\n"+"-" * 180+"\n")
+
+    text_box.insert(tk.END,"\t\t\t\t\t\tFOLDER/FILE")
+    text_box.insert(tk.END,"\t\t\t\t\tFILE-NAME")
+    text_box.insert(tk.END,"\t\t\t\t\t\tSIZES")
+
+    text_box.insert(tk.END,"\n"+"-" * 180+"\n")
+    
+
+    subfolder_sizes = {}
+
+    for item in os.listdir(folder_path):
+
+        item_path = os.path.join(folder_path,item)
 
         if os.path.isdir(item_path):
+
             size = get_folder_size(item_path)
-            print(f"<FOLDER>\t{item:<62} {format_size(size)}")
+            subfolder_sizes[item] = size
+
+            text_box.insert(
+                tk.END,
+                f"\t\t\t\t\t\t<FOLDER>\t\t\t\t{item}\t\t\t\t\t\t\t{format_size(size)}\n"
+            )
 
         elif os.path.isfile(item_path):
+
             size = os.path.getsize(item_path)
-            print(f"<FILE>\t\t{item:<62} {format_size(size)}")
-   
-    except PermissionError:
-        print("Permission denied.")
+
+            text_box.insert(
+                tk.END,
+                f"\t\t\t\t\t\t<FILE>\t\t\t\t{item}\t\t\t\t\t\t\t{format_size(size)}\n"
+            )
+
+    text_box.insert(tk.END,"\n"+"-" * 180+"\n")
+
+    text_box.insert(tk.END,"\t\t\t\t\t\t\t\t\t\t\t\tThankyou")
+
+    text_box.insert(tk.END,"\n"+"-" * 180+"\n")
 
 
-if __name__ == "__main__":
-    folder = input("Enter folder path: ").strip()
+    # Pie Chart
+    # if subfolder_sizes:
 
-    if os.path.exists(folder):
-        analyze_folder(folder)
-    else:
-        print("\t\t\t*******FOLDER DOES NOT EXIST*******")
-    print("-" * 150)
-    print("\t\t\t\t\t\t\t THANK YOU")
-    print("-" * 150)
+        # plt.figure(figsize=(7,7))
+
+        # plt.pie(
+        #     subfolder_sizes.values(),
+        #     labels=subfolder_sizes.keys(),
+        #     autopct="%1.1f%%"
+        # )
+
+        # plt.title("Subfolder Size Distribution")
+        # plt.show()
 
 
-#  ------------------------------------------------------------------------------------------------------------------------------------------------------
-#  ******************************************************************************************************************************************************
-    #EXPACTED OUTPUT:-
 
-#  c:\Users\asus\python_intership\project_folder\folder_size_analyzer.py:42: SyntaxWarning: "\F" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\F"? A raw string is also an option.
-#  print("\nFILE\FOLDER\t\tFILE NAME\t\t\t\t\t\tSIZE:\n")
-#  Enter folder path: C:\samsung data
+# GUI Window
 
-#  Analyzing: C:\samsung data
+root = tk.Tk()
 
-#  ------------------------------------------------------------------------------------------------------------------------------------------------------
-#                                                       Total Folder Size: 3.09 GB
-#  ------------------------------------------------------------------------------------------------------------------------------------------------------
+root.title("Folder Size Analyzer")
+root.geometry("1000x1200")
 
-#  FILE\FOLDER             FILE NAME                                               SIZE:
 
-#  ------------------------------------------------------------------------------------------------------------------------------------------------------
-#  <FOLDER>        app                                                            50.39 MB
-#  <FOLDER>        audio                                                          21.55 MB
-#  <FILE>          Bella ciao new remix.mp3                                       387.86 KB
-#  <FILE>          Best ever ringtone.mp3                                         337.66 KB
-#  <FOLDER>        Camera                                                         1.76 GB
-#  <FILE>          DSC_7960.JPG                                                   5.86 MB
-#  <FILE>          DSC_7961.JPG                                                   6.54 MB
-#  <FILE>          DSC_7962.JPG                                                   6.00 MB
-#  <FILE>          DSC_7963.JPG                                                   6.54 MB
-#  <FILE>          DSC_7966.JPG                                                   6.00 MB
-#  <FILE>          DSC_7967.JPG                                                   5.75 MB
-#  <FILE>          DSC_7968.JPG                                                   6.64 MB
-#  <FILE>          DSC_7969.JPG                                                   6.37 MB
-#  <FILE>          DSC_7970.JPG                                                   6.07 MB
-#  <FOLDER>        Facebook                                                       1.96 MB
-#  <FOLDER>        folder                                                         171.54 KB
-#  <FOLDER>        image                                                          188.26 MB
-#  <FOLDER>        Instagram                                                      1.84 MB
-#  <FILE>          iPhone_6_Plus_Original_Ringtone(256k) (1).mp3                  835.54 KB
-#  <FILE>          Maa_O_Meri_Maa_WhatsApp_status(256k).mp3                       1.95 MB
-#  <FILE>          Mera_bhai_tu_.mp3                                              941.29 KB
-#  <FILE>          Meri maa ke barabar ko.mp3                                     469.91 KB
-#  <FOLDER>        Mrg video                                                      579.62 MB
-#  <FOLDER>        Snapchat                                                       68.79 MB
-#  <FILE>          Soft Romantic.mp3                                              447.05 KB
-#  <FOLDER>        video                                                          395.52 MB
-#  ------------------------------------------------------------------------------------------------------------------------------------------------------
-#                                                         THANK YOU
-#  ------------------------------------------------------------------------------------------------------------------------------------------------------
+title = tk.Label(
+    root,
+    text="Folder Size Analyzer",
+    font=("Arial",20,"bold","italic")
+)
+
+title.pack(pady=10)
+
+
+button = tk.Button(
+    root,
+    text="Select Folder",
+    command=analyze_folder,
+    font=("Arial",14),
+    width=20,
+    bg="red"
+)
+
+button.pack(pady=10)
+
+
+text_box = tk.Text(
+    root,
+    fg="white",
+    height=100,
+    width=200,
+    bg="blue"
+)
+
+text_box.pack(padx=10,pady=10)
+
+
+root.mainloop()
